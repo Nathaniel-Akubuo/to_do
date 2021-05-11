@@ -4,9 +4,8 @@ import 'package:to_do/constants/text_styles.dart';
 
 class CustomTextfield extends StatelessWidget {
   final TextEditingController controller;
-  Function onChanged;
 
-  CustomTextfield({this.controller, this.onChanged});
+  CustomTextfield({this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class CustomTextfield extends StatelessWidget {
           width: mediaQuery.width * 0.8,
           height: mediaQuery.height * 0.08,
           child: TextField(
-            onChanged: onChanged,
+            controller: controller,
             style: taskStyle,
             maxLines: maxLines,
             decoration: InputDecoration(

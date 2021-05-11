@@ -4,12 +4,13 @@ import 'custom_textfield.dart';
 import 'package:to_do/constants/colors.dart';
 import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
-class ModalBottomSheet extends StatelessWidget {
-//  var controller = TextEditingController();
-//  void _setText() {
-//    title = controller.text;
-//  }
+class ModalBottomSheet extends StatefulWidget {
+  @override
+  _ModalBottomSheetState createState() => _ModalBottomSheetState();
+}
+
+class _ModalBottomSheetState extends State<ModalBottomSheet> {
+  var controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class ModalBottomSheet extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CustomTextfield(
-              onChanged: (value) => title = value,
+              controller: controller,
             ),
             SizedBox(height: 20),
             Container(
@@ -33,8 +34,8 @@ class ModalBottomSheet extends StatelessWidget {
                 child: Container(
                     child: Text('ADD', style: TextStyle(fontSize: 20))),
                 onPressed: () {
+                  title = controller.text;
                   Provider.of<ToDo>(context, listen: false).addToDo(title);
-                  print('nathaniel');
                   Navigator.pop(context);
                 },
               ),

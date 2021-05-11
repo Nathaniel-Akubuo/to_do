@@ -10,7 +10,6 @@ import 'util/to_do.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         backgroundColor: backgroundColor,
@@ -34,63 +33,31 @@ class HomeScreen extends StatelessWidget {
                 context: context,
                 builder: (context) => ModalBottomSheet())),
         body: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                height: mediaQuery.height * 0.41,
-                child: Expanded(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          GreyRoundedButton(
-                            title:
-                                'You have ${Provider.of<ToDo>(context, listen: true).undoneListLength()} undone task(s)',
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Expanded(
-                        child: Container(
-                          height: mediaQuery.height * 0.4,
-                          child: Expanded(child: UndoneListView()),
-                        ),
-                      ),
-                    ],
+              Row(
+                children: [
+                  GreyRoundedButton(
+                    title:
+                        'You have ${Provider.of<ToDo>(context, listen: true).undoneList.length} undone task(s)',
                   ),
-                ),
+                ],
               ),
+              SizedBox(height: 10),
+              Expanded(child: UndoneListView()),
               SizedBox(height: 30),
-              Container(
-                height: mediaQuery.height * 0.41,
-                child: Expanded(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          GreyRoundedButton(
-                            title:
-                                'Hurray! You have completed ${Provider.of<ToDo>(context, listen: true).doneListLength()} task(s)',
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Expanded(
-                        child: Container(
-                          height: mediaQuery.height * 0.4,
-                          child: Expanded(
-                            child: DoneListView(),
-                          ),
-                        ),
-                      ),
-                    ],
+              Row(
+                children: [
+                  GreyRoundedButton(
+                    title:
+                        'Hurray! You have completed ${Provider.of<ToDo>(context, listen: true).doneList.length} task(s)',
                   ),
-                ),
-              )
+                ],
+              ),
+              SizedBox(height: 10),
+              Expanded(child: DoneListView()),
             ],
           ),
         ),

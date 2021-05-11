@@ -5,18 +5,6 @@ class ToDo extends ChangeNotifier {
   List<ToDoModel> undoneList = [];
   List<ToDoModel> doneList = [];
 
-  int undoneListLength() {
-    var v = undoneList.length;
-    notifyListeners();
-    return v;
-  }
-
-  int doneListLength() {
-    var v = doneList.length;
-    notifyListeners();
-    return v;
-  }
-
   void addToDo(String item) {
     var toDoItem = ToDoModel(item: item, isChecked: false);
     undoneList.add(toDoItem);

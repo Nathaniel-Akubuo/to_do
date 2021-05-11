@@ -29,7 +29,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^5.0.0
-  group_radio_button: ^1.0.1
   circular_check_box: ^1.0.4
 
 dev_dependencies:

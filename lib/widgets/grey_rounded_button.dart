@@ -13,7 +13,7 @@ class GreyRoundedButton extends StatelessWidget {
     return Container(
       height: mediaQuery.height * 0.0455,
       decoration: BoxDecoration(
-          color: blue, borderRadius: BorderRadius.all(Radius.circular(10))),
+          color: kBlue, borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: mediaQuery.width * 0.025,

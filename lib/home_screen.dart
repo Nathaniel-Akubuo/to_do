@@ -7,12 +7,18 @@ import 'widgets/done_list_view.dart';
 import 'package:provider/provider.dart';
 import 'util/to_do.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    Provider.of<ToDo>(context, listen: false).initPrefs();
     return SafeArea(
       child: Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: kBackgroundColor,
         appBar: AppBar(
             title: Text(
               'Tasks',
@@ -20,13 +26,13 @@ class HomeScreen extends StatelessWidget {
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             centerTitle: false,
-            backgroundColor: backgroundColor,
+            backgroundColor: kBackgroundColor,
             elevation: 0),
         floatingActionButton: FloatingActionButton(
-            backgroundColor: blue,
+            backgroundColor: kBlue,
             child: Icon(Icons.add),
             onPressed: () => showModalBottomSheet(
-                backgroundColor: backgroundColor,
+                backgroundColor: kBackgroundColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),

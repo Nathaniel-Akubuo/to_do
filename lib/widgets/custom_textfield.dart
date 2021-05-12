@@ -12,19 +12,20 @@ class CustomTextfield extends StatelessWidget {
     final maxLines = 5;
     final mediaQuery = MediaQuery.of(context).size;
     return Theme(
-        data: ThemeData(primaryColor: blue),
+        data: ThemeData(primaryColor: kBlue),
         child: Container(
           margin: EdgeInsets.all(12),
           width: mediaQuery.width * 0.8,
           height: mediaQuery.height * 0.08,
           child: TextField(
             controller: controller,
+            autofocus: true,
             style: taskStyle,
             maxLines: maxLines,
             decoration: InputDecoration(
               hintText: 'Add a task here',
               hintStyle: TextStyle(color: Colors.grey),
-              fillColor: tileColor,
+              fillColor: kTileColor,
               filled: true,
             ),
           ),

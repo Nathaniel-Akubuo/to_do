@@ -9,53 +9,57 @@ class ToDoBubble extends StatelessWidget {
   final Function onChecked;
   final Function onDismissed;
   final String keyValue;
+  final Function onTap;
 
   ToDoBubble(
       {this.title,
       this.isChecked = false,
       this.onChecked,
       this.onDismissed,
-      this.keyValue});
+      this.keyValue, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
 
-    return Dismissible(
-      key: Key(keyValue),
-      background: Container(
-        color: backgroundColor,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: Container(
-          width: double.infinity,
-          height: mediaQuery.height * 0.07,
-          decoration: BoxDecoration(
-              color: tileColor,
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: Row(
-            children: [
-              Theme(
-                child: CircularCheckBox(value: isChecked, onChanged: onChecked),
-                data: ThemeData(
-                  primarySwatch: blue,
-                  unselectedWidgetColor: Colors.grey, // Your color
+    return GestureDetector(
+      onTap: onTap,
+      child: Dismissible(
+        key: Key(keyValue),
+        background: Container(
+          color: kBackgroundColor,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Container(
+            width: double.infinity,
+            height: mediaQuery.height * 0.07,
+            decoration: BoxDecoration(
+                color: kTileColor,
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: Row(
+              children: [
+                Theme(
+                  child: CircularCheckBox(value: isChecked, onChanged: onChecked),
+                  data: ThemeData(
+                    primarySwatch: kBlue,
+                    unselectedWidgetColor: Colors.grey, // Your color
+                  ),
                 ),
-              ),
-              Expanded(
-                  child: Padding(
-                padding: const EdgeInsets.all(5),
-                child: Text(
-                  title,
-                  style: taskStyle,
-                ),
-              ))
-            ],
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Text(
+                    title,
+                    style: taskStyle,
+                  ),
+                ))
+              ],
+            ),
           ),
         ),
+        onDismissed: onDismissed,
       ),
-      onDismissed: onDismissed,
     );
   }
 }

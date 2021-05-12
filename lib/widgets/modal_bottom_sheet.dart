@@ -21,6 +21,7 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
   @override
   Widget build(BuildContext context) {
     controller.text = widget.defaultText;
+    controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
     var mediaQuery = MediaQuery.of(context).size;
     return Container(
       height: mediaQuery.height * 0.4,

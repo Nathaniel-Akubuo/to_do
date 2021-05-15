@@ -16,7 +16,8 @@ class ToDoBubble extends StatelessWidget {
       this.isChecked = false,
       this.onChecked,
       this.onDismissed,
-      this.keyValue, this.onTap});
+      this.keyValue,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -36,24 +37,26 @@ class ToDoBubble extends StatelessWidget {
             height: mediaQuery.height * 0.07,
             decoration: BoxDecoration(
                 color: kTileColor,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
+                borderRadius: BorderRadius.all(Radius.circular(15))),
             child: Row(
               children: [
                 Theme(
-                  child: CircularCheckBox(value: isChecked, onChanged: onChecked),
+                  child:
+                      CircularCheckBox(value: isChecked, onChanged: onChecked),
                   data: ThemeData(
                     primarySwatch: kBlue,
                     unselectedWidgetColor: Colors.grey, // Your color
                   ),
                 ),
                 Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Text(
-                    title,
-                    style: taskStyle,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Text(
+                      title,
+                      style: kTaskStyle,
+                    ),
                   ),
-                ))
+                )
               ],
             ),
           ),

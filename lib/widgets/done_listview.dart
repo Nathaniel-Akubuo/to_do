@@ -5,7 +5,7 @@ import 'to_do_bubble.dart';
 import 'package:to_do/constants/colors.dart';
 import 'package:to_do/widgets/modal_bottom_sheet.dart';
 
-class UndoneListView extends StatelessWidget {
+class DoneListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ToDo>(
@@ -23,20 +23,20 @@ class UndoneListView extends StatelessWidget {
                       ),
                       context: context,
                       builder: (context) => ModalBottomSheet(
-                            defaultText: toDo.undoneList[index].item,
-                            route: 'undone',
+                            defaultText: toDo.doneList[index].item,
+                            type: 'homeDone',
                             index: index,
                           ));
                 },
-                keyValue: toDo.undoneList[index].item,
-                onDismissed: (d) => toDo.dismissUndone(
-                    index: index, direction: DismissDirection.startToEnd),
-                title: toDo.undoneList[index].item,
-                isChecked: toDo.undoneList[index].isChecked,
-                onChecked: (v) => toDo.markAsDone(value: v, index: index),
+                keyValue: toDo.doneList[index].item,
+                onDismissed: (d) => toDo.dismissDone(
+                    direction: DismissDirection.startToEnd, index: index),
+                title: toDo.doneList[index].item,
+                isChecked: toDo.doneList[index].checkValue,
+                onChecked: (v) => toDo.markAsUndone(value: v, index: index),
               );
             },
-            itemCount: toDo.undoneList.length,
+            itemCount: toDo.doneList.length,
           ),
         );
       },

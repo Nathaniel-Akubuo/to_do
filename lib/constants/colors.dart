@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-const grey = Color(0xffbcc2db);
-const almond = Color(0xff809c99);
-const pear = Color(0xffd5d5a2);
+const kOrange= Color(0xffec6e46);
+const kTeal = Color(0xff60e7ea);
 const kTileColor = Color(0xff222228);
 const kBackgroundColor = Colors.black;
 

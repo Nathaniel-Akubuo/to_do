@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class ToDoBubble extends StatelessWidget {
   final String title;
+  final bool isDone;
   final isChecked;
   final Function onChecked;
   final Function onDismissed;
@@ -17,7 +18,8 @@ class ToDoBubble extends StatelessWidget {
       this.onChecked,
       this.onDismissed,
       this.keyValue,
-      this.onTap});
+      this.onTap,
+      this.isDone});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class ToDoBubble extends StatelessWidget {
                   child:
                       CircularCheckBox(value: isChecked, onChanged: onChecked),
                   data: ThemeData(
-                    primarySwatch: kBlue,
+                    primarySwatch: Colors.grey,
                     unselectedWidgetColor: Colors.grey, // Your color
                   ),
                 ),
@@ -53,7 +55,7 @@ class ToDoBubble extends StatelessWidget {
                     padding: const EdgeInsets.all(5),
                     child: Text(
                       title,
-                      style: kTaskStyle,
+                      style: isDone ? kDoneTaskStyle : kTaskStyle,
                     ),
                   ),
                 )

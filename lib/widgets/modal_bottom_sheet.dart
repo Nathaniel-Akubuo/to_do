@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do/util/to_do.dart';
-import 'custom_textfield.dart';
+import 'custom_text_field.dart';
 import 'package:to_do/constants/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/util/group_to_do.dart';
@@ -19,7 +19,13 @@ class ModalBottomSheet extends StatefulWidget {
 }
 
 class _ModalBottomSheetState extends State<ModalBottomSheet> {
-  var controller = TextEditingController(text: '');
+  var controller = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +115,7 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                                         key: widget.keyValue);
                                     break;
                                   case 'groupUndone':
-                                    groupToDo.editDoneToDo(
+                                    groupToDo.editUndoneToDo(
                                         item: controller.text,
                                         index: widget.index,
                                         key: widget.keyValue);

@@ -13,6 +13,7 @@ class GroupUndoneListView extends StatelessWidget {
       return ListView.builder(
         itemBuilder: (context, index) {
           return ToDoBubble(
+            isDone: false,
             title: groupToDo.undoneList[index].item,
             isChecked: groupToDo.undoneList[index].checkValue,
             keyValue: groupToDo.undoneList[index].item,

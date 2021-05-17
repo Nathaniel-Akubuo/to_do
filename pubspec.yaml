@@ -37,6 +37,7 @@ dependencies:
   charts_flutter: ^0.10.0
   font_awesome_flutter: ^9.0.0
   dotted_border: ^2.0.0
+  percent_indicator: ^3.0.1
 
 
 dev_dependencies:

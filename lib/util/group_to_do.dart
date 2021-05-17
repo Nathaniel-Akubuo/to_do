@@ -11,10 +11,31 @@ class GroupToDo extends ChangeNotifier {
 
   initPrefs(key) async {
     prefs = await SharedPreferences.getInstance();
-    loadUndoneData(key: "${key}undone");
-    loadDoneData(key: "${key}done");
+    loadUndoneData(key: key);
+    loadDoneData(key: key);
     notifyListeners();
   }
+
+  double percentDone({key}) {
+    var undone = prefs.getStringList("${key}undone");
+    var done = prefs.getStringList("${key}done");
+    var percent;
+    if (undone != null && done != null) {
+      percent = (done.length / (done.length + undone.length));
+      return percent;
+    } else
+      return 0;
+  }
+
+  void initPercent(key) async {
+    prefs = await SharedPreferences.getInstance();
+    percentDone(key: key);
+    notifyListeners();
+  }
+
+  int get doneCount => doneList.length;
+
+  int get totalCount => doneList.length + undoneList.length;
 
   void saveUndoneData({key}) {
     var list = undoneList.map((e) => jsonEncode(e.toMap())).toList();
@@ -50,19 +71,19 @@ class GroupToDo extends ChangeNotifier {
     title = key;
     var toDoModel = ToDoModel(item: text, checkValue: false);
     undoneList.add(toDoModel);
-    saveUndoneData(key: "${key}undone");
+    saveUndoneData(key: key);
     notifyListeners();
   }
 
   void editUndoneToDo({String item, int index, key}) {
     undoneList[index].item = item;
-    saveUndoneData();
+    saveUndoneData(key: key);
     notifyListeners();
   }
 
   void editDoneToDo({String item, int index, key}) {
     doneList[index].item = item;
-    saveDoneData();
+    saveDoneData(key: key);
     notifyListeners();
   }
 
@@ -70,8 +91,8 @@ class GroupToDo extends ChangeNotifier {
     undoneList[index].checkValue = !undoneList[index].checkValue;
     doneList.add(undoneList[index]);
     undoneList.removeAt(index);
-    saveUndoneData(key: "${key}undone");
-    saveDoneData(key: "${key}done");
+    saveUndoneData(key: key);
+    saveDoneData(key: key);
     notifyListeners();
   }
 
@@ -79,15 +100,15 @@ class GroupToDo extends ChangeNotifier {
     doneList[index].checkValue = !doneList[index].checkValue;
     undoneList.add(doneList[index]);
     doneList.removeAt(index);
-    saveUndoneData(key: "${key}undone");
-    saveDoneData(key: "${key}done");
+    saveUndoneData(key: key);
+    saveDoneData(key: key);
     notifyListeners();
   }
 
   void dismissUndone({DismissDirection direction, int index, key}) {
     if (direction == DismissDirection.startToEnd) {
       undoneList.removeAt(index);
-      saveUndoneData(key: "${key}undone");
+      saveUndoneData(key: key);
       notifyListeners();
     }
   }
@@ -95,7 +116,7 @@ class GroupToDo extends ChangeNotifier {
   void dismissDone({DismissDirection direction, int index, key}) {
     if (direction == DismissDirection.startToEnd) {
       doneList.removeAt(index);
-      saveDoneData(key: "${key}done");
+      saveDoneData(key: key);
       notifyListeners();
     }
   }

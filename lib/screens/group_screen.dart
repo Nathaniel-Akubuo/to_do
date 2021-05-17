@@ -7,7 +7,6 @@ import 'package:to_do/widgets/group_done_listview.dart';
 import 'package:to_do/widgets/group_undone_listview.dart';
 import 'package:to_do/widgets/modal_bottom_sheet.dart';
 
-
 class GroupScreen extends StatefulWidget {
   final title;
   final Function load;
@@ -19,7 +18,6 @@ class GroupScreen extends StatefulWidget {
 }
 
 class _GroupScreenState extends State<GroupScreen> {
-  var controller = TextEditingController(text: '');
 
   @override
   void initState() {
@@ -29,7 +27,6 @@ class _GroupScreenState extends State<GroupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<GroupToDo>(context, listen: false).title = widget.title;
     return SafeArea(
       child: Consumer<GroupToDo>(
         builder: (context, child, groupToDo) {
@@ -45,17 +42,18 @@ class _GroupScreenState extends State<GroupScreen> {
                 backgroundColor: kBlue,
                 child: Icon(Icons.add),
                 onPressed: () => showModalBottomSheet(
-                    backgroundColor: kBackgroundColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    context: context,
-                    builder: (context) => ModalBottomSheet(
-                          type: 'groupScreenAdd',
-                          keyValue: widget.title,
-                        ))),
+                      backgroundColor: kBackgroundColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      context: context,
+                      builder: (context) => ModalBottomSheet(
+                        type: 'groupScreenAdd',
+                        keyValue: widget.title,
+                      ),
+                    )),
             body: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.all(15),
               child: Column(
                 children: [
                   Row(

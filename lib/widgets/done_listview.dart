@@ -13,8 +13,11 @@ class DoneListView extends StatelessWidget {
         var toDo = Provider.of<ToDo>(context, listen: false);
         return Container(
           child: ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return ToDoBubble(
+                isDone: true,
                 onTap: () {
                   showModalBottomSheet(
                       backgroundColor: kBackgroundColor,

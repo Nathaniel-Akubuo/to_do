@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:to_do/models/task_screen_model.dart';
 import 'package:to_do/models/to_do_model.dart';
@@ -18,14 +19,29 @@ class ToDo extends ChangeNotifier {
     notifyListeners();
   }
 
+  int getDoneCount() {
+    return undoneList.length;
+  }
+
+  int get totalCount => doneList.length + undoneList.length;
+
   void addNewGroup(String name) {
     var group = TaskScreenModel(
         name: name,
         dateCreated:
-            '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}');
+            '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}');
     groupList.add(group);
     saveGroupData();
     notifyListeners();
+  }
+
+  double percentDone() {
+    var percent;
+    if (undoneList != null && doneList != null) {
+      percent = (doneList.length / (doneList.length + undoneList.length));
+      return percent;
+    } else
+      return 0;
   }
 
   void addToDo(String item) {
@@ -48,16 +64,11 @@ class ToDo extends ChangeNotifier {
   }
 
   void markAsDone({int index}) {
-    if (undoneList[index].checkValue == true) {
-      undoneList[index].checkValue = !undoneList[index].checkValue;
-      undoneList.insert(0, undoneList[index]);
-      undoneList.removeAt(index);
-    } else {
-      undoneList[index].checkValue = !undoneList[index].checkValue;
-      undoneList.add(undoneList[index]);
-      undoneList.removeAt(index);
-      saveUndoneData();
-    }
+    undoneList[index].checkValue = !undoneList[index].checkValue;
+    doneList.add(undoneList[index]);
+    undoneList.removeAt(index);
+    saveDoneData();
+    saveUndoneData();
     notifyListeners();
   }
 
@@ -84,6 +95,12 @@ class ToDo extends ChangeNotifier {
       saveDoneData();
       notifyListeners();
     }
+  }
+
+  void deleteGroup({index}) {
+    groupList.removeAt(index);
+    saveGroupData();
+    notifyListeners();
   }
 
   void saveUndoneData() {

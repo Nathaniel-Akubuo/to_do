@@ -10,17 +10,19 @@ class UndoneListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ToDo>(
       builder: (context, child, toDo) {
-        var toDo = Provider.of<ToDo>(context, listen: false);
+        var toDo = Provider.of<ToDo>(context, listen: true);
         return ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             return ToDoBubble(
+              isDone: false,
               onTap: () {
                 showModalBottomSheet(
                     backgroundColor: kBackgroundColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
+
                     ),
                     context: context,
                     builder: (context) => ModalBottomSheet(

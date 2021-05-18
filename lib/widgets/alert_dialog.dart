@@ -16,6 +16,7 @@ class AlertDialogBox extends StatelessWidget {
         title,
         style: kTitleStyle,
       ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       content: Text(
         content,
         style: kTaskStyle,

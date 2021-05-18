@@ -48,8 +48,7 @@ class ToDoGroupBubble extends StatelessWidget {
                 width: this.width ?? mediaQuery.width * 0.4,
                 height: mediaQuery.height * 0.21,
                 decoration: BoxDecoration(
-                    color: kTileColor,
-                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                    color: kTileColor, borderRadius: BorderRadius.circular(15)),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 8),

@@ -9,7 +9,14 @@ import 'package:to_do/widgets/group_widget_builder.dart';
 import 'package:to_do/widgets/to_do_group_bubble.dart';
 import 'package:to_do/widgets/undone_listview.dart';
 
-class HomeScreenLayout extends StatelessWidget {
+class HomeScreenLayout extends StatefulWidget {
+  @override
+  _HomeScreenLayoutState createState() => _HomeScreenLayoutState();
+}
+
+class _HomeScreenLayoutState extends State<HomeScreenLayout> {
+  bool isExpanded = false;
+
   @override
   Widget build(BuildContext context) {
     var toDo = Provider.of<ToDo>(context, listen: true);
@@ -70,9 +77,7 @@ class HomeScreenLayout extends StatelessWidget {
                             width: 10,
                             height: 10,
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                             color: kBlue
-                            ),
+                                shape: BoxShape.circle, color: kBlue),
                           ),
                         ],
                       ),
@@ -122,9 +127,7 @@ class HomeScreenLayout extends StatelessWidget {
                             width: 10,
                             height: 10,
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: kBlue
-                            ),
+                                shape: BoxShape.circle, color: kBlue),
                           ),
                         ],
                       ),
@@ -149,10 +152,6 @@ class HomeScreenLayout extends StatelessWidget {
         SizedBox(height: 20),
         Container(width: double.infinity, child: UndoneListView()),
         SizedBox(height: 20),
-        Text(
-          'COMPLETED',
-          style: kTitleStyle.copyWith(color: Colors.grey),
-        ),
         SizedBox(
           height: 20,
           child: Divider(
@@ -160,9 +159,29 @@ class HomeScreenLayout extends StatelessWidget {
             thickness: 0.5,
           ),
         ),
-        Container(width: double.infinity, child: DoneListView()),
+        ExpansionTile(
+          onExpansionChanged: (e) => setState(() {
+            isExpanded = !isExpanded;
+          }),
+          title: Text(
+            'COMPLETED',
+            style: kTitleStyle.copyWith(color: Colors.grey),
+            textAlign: TextAlign.start,
+          ),
+          tilePadding: EdgeInsets.all(0),
+          trailing: isExpanded
+              ? Icon(Icons.keyboard_arrow_up)
+              : Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.grey,
+                ),
+          children: [
+            Container(width: double.infinity, child: DoneListView()),
+          ],
+        ),
         SizedBox(height: 60),
       ],
     );
   }
 }
+

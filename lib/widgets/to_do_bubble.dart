@@ -23,8 +23,6 @@ class ToDoBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context).size;
-
     return GestureDetector(
       onTap: onTap,
       child: Dismissible(
@@ -36,7 +34,6 @@ class ToDoBubble extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 10),
           child: Container(
             width: double.infinity,
-            height: mediaQuery.height * 0.07,
             decoration: BoxDecoration(
                 color: kTileColor,
                 borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -46,17 +43,15 @@ class ToDoBubble extends StatelessWidget {
                   child:
                       CircularCheckBox(value: isChecked, onChanged: onChecked),
                   data: ThemeData(
-                    primarySwatch: Colors.grey,
-                    unselectedWidgetColor: Colors.grey, // Your color
-                  ),
+                      primarySwatch: Colors.grey,
+                      unselectedWidgetColor: Colors.grey // Your color
+                      ),
                 ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(5),
-                    child: Text(
-                      title,
-                      style: isDone ? kDoneTaskStyle : kTaskStyle,
-                    ),
+                    child: Text(title,
+                        style: isDone ? kDoneTaskStyle : kTaskStyle),
                   ),
                 )
               ],

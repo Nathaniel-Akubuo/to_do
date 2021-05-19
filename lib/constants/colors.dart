@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-const kOrange= Color(0xffec6e46);
+const kOrange = Color(0xffec6e46);
 const kTeal = Color(0xff60e7ea);
 const kTileColor = Color(0xff222228);
 const kBackgroundColor = Colors.black;
+
+var kColorsList = [Color(0xffec6e46), Color(0xff60e7ea), Color(0xff3068DF)];
 
 const MaterialColor kBlue = const MaterialColor(
   0xff3068DF,

@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:to_do/constants/colors.dart';
+import 'package:to_do/constants/themes.dart';
 
 class GreyRoundedButton extends StatelessWidget {
   final String title;

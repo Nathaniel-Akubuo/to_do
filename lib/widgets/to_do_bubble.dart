@@ -1,6 +1,5 @@
 import 'package:circular_check_box/circular_check_box.dart';
-import 'package:to_do/constants/colors.dart';
-import 'package:to_do/constants/text_styles.dart';
+import 'package:to_do/constants/themes.dart';
 import 'package:flutter/material.dart';
 
 class ToDoBubble extends StatelessWidget {
@@ -23,38 +22,43 @@ class ToDoBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Dismissible(
         key: Key(keyValue),
         background: Container(
-          color: kBackgroundColor,
+          color: theme.primaryColor,
         ),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 10),
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: kTileColor,
-                borderRadius: BorderRadius.all(Radius.circular(15))),
-            child: Row(
-              children: [
-                Theme(
-                  child:
-                      CircularCheckBox(value: isChecked, onChanged: onChecked),
-                  data: ThemeData(
-                      primarySwatch: Colors.grey,
-                      unselectedWidgetColor: Colors.grey // Your color
-                      ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Text(title,
-                        style: isDone ? kDoneTaskStyle : kTaskStyle),
-                  ),
-                )
-              ],
+          child: Card(
+            elevation: 2,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: theme.cardColor,
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              child: Row(
+                children: [
+                  CircularCheckBox(
+                      activeColor: Colors.grey,
+                      inactiveColor: kBlue,
+                      value: isChecked,
+                      onChanged: onChecked),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Text(title,
+                          style: isDone
+                              ? kDoneTaskStyle
+                              : theme.textTheme.subtitle2),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

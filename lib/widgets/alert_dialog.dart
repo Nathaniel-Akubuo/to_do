@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do/constants/colors.dart';
-import 'package:to_do/constants/text_styles.dart';
+import 'package:to_do/constants/themes.dart';
 
 class AlertDialogBox extends StatelessWidget {
   final content;
@@ -14,14 +13,14 @@ class AlertDialogBox extends StatelessWidget {
     return AlertDialog(
       title: Text(
         title,
-        style: kTitleStyle,
+        style: Theme.of(context).textTheme.headline6,
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       content: Text(
         content,
-        style: kTaskStyle,
+        style: Theme.of(context).textTheme.subtitle2,
       ),
-      backgroundColor: kTileColor,
+      backgroundColor: Theme.of(context).cardColor,
       actions: [
         TextButton(
           onPressed: () {

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:to_do/constants/colors.dart';
-import 'package:to_do/constants/text_styles.dart';
+import 'package:to_do/constants/themes.dart';
 
-class CustomTextfield extends StatelessWidget {
+class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final hintText;
 
-  CustomTextfield({this.controller, this.hintText});
+  CustomTextField({this.controller, this.hintText});
 
   @override
   Widget build(BuildContext context) {
     final maxLines = 5;
     final mediaQuery = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
     return Theme(
       data: ThemeData(primaryColor: kBlue),
       child: Container(
@@ -19,12 +19,12 @@ class CustomTextfield extends StatelessWidget {
         width: mediaQuery.width * 0.8,
         height: mediaQuery.height * 0.08,
         decoration: BoxDecoration(
-            color: kTileColor,
+            color: theme.cardColor,
             borderRadius: BorderRadius.all(Radius.circular(15))),
         child: TextField(
           controller: controller,
           autofocus: true,
-          style: kTaskStyle,
+          style: theme.textTheme.subtitle2,
           maxLines: maxLines,
           decoration: InputDecoration(
             border: InputBorder.none,

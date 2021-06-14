@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:to_do/widgets/home_screen_layout.dart';
 import '../widgets/modal_bottom_sheet.dart';
-import '../constants/colors.dart';
-import 'package:provider/provider.dart';
-import '../util/to_do.dart';
+import '../constants/themes.dart';
 
-// ignore: must_be_immutable
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   String day;
-  int date;
   String month;
+  int date;
 
   void setDayAndDate() {
     date = DateTime.now().day;
@@ -82,38 +84,37 @@ class HomeScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     setDayAndDate();
     setMonth();
-    Provider.of<ToDo>(context, listen: false).initPrefs();
-    return Consumer<ToDo>(
-      builder: (context, child, toDo) {
-        var toDo = Provider.of<ToDo>(context, listen: true);
-        return SafeArea(
-          child: Scaffold(
-            backgroundColor: kBackgroundColor,
-            appBar: AppBar(
-                title: Text(
-                  '$day, $date $month',
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                centerTitle: true,
-                backgroundColor: kBackgroundColor,
-                elevation: 0),
-            floatingActionButton: FloatingActionButtons(),
-            body: Container(
-              height: double.infinity,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: HomeScreenLayout(),
-                ),
-              ),
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: theme.primaryColor,
+        appBar: AppBar(
+            title: Text(
+              '$day, $date $month',
+              style: theme.textTheme.headline6,
+            ),
+            centerTitle: true,
+            backgroundColor: theme.primaryColor,
+            elevation: 0),
+        floatingActionButton: FloatingActionButtons(),
+        body: Container(
+          height: double.infinity,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: HomeScreenLayout(),
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
@@ -121,13 +122,13 @@ class HomeScreen extends StatelessWidget {
 class FloatingActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-
         FloatingActionButton.extended(
           onPressed: () => showModalBottomSheet(
-              backgroundColor: kBackgroundColor,
+              backgroundColor: theme.primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
@@ -141,7 +142,7 @@ class FloatingActionButtons extends StatelessWidget {
             backgroundColor: kBlue,
             child: Icon(Icons.add),
             onPressed: () => showModalBottomSheet(
-                backgroundColor: kBackgroundColor,
+                backgroundColor: theme.primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),

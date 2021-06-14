@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:to_do/constants/colors.dart';
-import 'package:to_do/constants/text_styles.dart';
+import 'package:to_do/constants/themes.dart';
 import 'package:to_do/util/to_do.dart';
 import 'package:to_do/widgets/done_listview.dart';
 import 'package:to_do/widgets/group_widget_builder.dart';
@@ -20,23 +20,23 @@ class _HomeScreenLayoutState extends State<HomeScreenLayout> {
   @override
   Widget build(BuildContext context) {
     var toDo = Provider.of<ToDo>(context, listen: true);
+    var undoneBox = Hive.box('undone');
+    var doneBox = Hive.box('done');
     final mediaQuery = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'GROUPS',
-          style: kTitleStyle,
-        ),
+        Text('GROUPS', style: theme.textTheme.headline6),
         SizedBox(height: 20),
         Container(
             height: mediaQuery.height * 0.21,
             width: mediaQuery.width,
-            child: toDo.groupList.length == 0
+            child: Hive.box('group').length == 0
                 ? Center(
                     child: Text(
                       "YOU DON'T HAVE ANY GROUP YET",
-                      style: kDateTextStyle,
+                      style: theme.textTheme.subtitle1,
                     ),
                   )
                 : ToDoGroupListView()),
@@ -55,13 +55,13 @@ class _HomeScreenLayoutState extends State<HomeScreenLayout> {
                 progressColor: kBlue,
                 percent: toDo.percentDone(),
                 center: Text(
-                  toDo.doneList.length == 0
+                  doneBox.length == 0
                       ? '0%'
                       : '${(toDo.percentDone() * 100).toStringAsFixed(0)}%',
-                  style: kDateTextStyle,
+                  style: theme.textTheme.caption,
                 ),
               ),
-              SizedBox(width: 40),
+              Expanded(child: SizedBox(width: 40)),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -83,8 +83,8 @@ class _HomeScreenLayoutState extends State<HomeScreenLayout> {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        'Completed: ${toDo.doneList.length}',
-                        style: kTitleStyle.copyWith(
+                        'Completed: ${doneBox.length}',
+                        style: theme.textTheme.headline6.copyWith(
                             fontSize: 15, fontWeight: FontWeight.normal),
                       )
                     ],
@@ -109,8 +109,8 @@ class _HomeScreenLayoutState extends State<HomeScreenLayout> {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        'Uncompleted: ${toDo.undoneList.length}',
-                        style: kTitleStyle.copyWith(
+                        'Uncompleted: ${undoneBox.length}',
+                        style: theme.textTheme.headline6.copyWith(
                             fontSize: 15, fontWeight: FontWeight.normal),
                       ),
                     ],
@@ -133,8 +133,8 @@ class _HomeScreenLayoutState extends State<HomeScreenLayout> {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        'Total: ${toDo.doneList.length + toDo.undoneList.length}',
-                        style: kTitleStyle.copyWith(
+                        'Total: ${undoneBox.length + doneBox.length}',
+                        style: theme.textTheme.headline6.copyWith(
                             fontSize: 15, fontWeight: FontWeight.normal),
                       ),
                     ],
@@ -145,32 +145,22 @@ class _HomeScreenLayoutState extends State<HomeScreenLayout> {
           ),
         ),
         SizedBox(height: 35),
-        Text(
-          'TASKS',
-          style: kTitleStyle,
-        ),
+        Text('TASKS', style: theme.textTheme.headline6),
         SizedBox(height: 20),
         Container(width: double.infinity, child: UndoneListView()),
         SizedBox(height: 20),
-        SizedBox(
-          height: 20,
-          child: Divider(
-            color: Colors.grey,
-            thickness: 0.5,
-          ),
-        ),
         ExpansionTile(
           onExpansionChanged: (e) => setState(() {
             isExpanded = !isExpanded;
           }),
           title: Text(
             'COMPLETED',
-            style: kTitleStyle.copyWith(color: Colors.grey),
+            style: theme.textTheme.headline6,
             textAlign: TextAlign.start,
           ),
           tilePadding: EdgeInsets.all(0),
           trailing: isExpanded
-              ? Icon(Icons.keyboard_arrow_up)
+              ? Icon(Icons.keyboard_arrow_up, color: kBlue)
               : Icon(
                   Icons.keyboard_arrow_down,
                   color: Colors.grey,
@@ -184,4 +174,3 @@ class _HomeScreenLayoutState extends State<HomeScreenLayout> {
     );
   }
 }
-

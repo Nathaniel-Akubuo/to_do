@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:to_do/util/hive_database.dart';
 import 'package:to_do/util/to_do.dart';
 import 'custom_text_field.dart';
-import 'package:to_do/constants/colors.dart';
+import 'package:to_do/constants/themes.dart';
 import 'package:provider/provider.dart';
-import 'package:to_do/util/group_to_do.dart';
 
 class ModalBottomSheet extends StatefulWidget {
   final defaultText;
@@ -40,7 +41,7 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomTextfield(
+                  CustomTextField(
                     controller: controller,
                     hintText: 'Add name of new group',
                   ),
@@ -61,7 +62,7 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                                 style: TextStyle(fontSize: 20)),
                           ),
                           onPressed: () {
-                            toDo.addNewGroup(controller.text.toUpperCase());
+                            toDo.addGroup(controller.text.toUpperCase());
                             Navigator.pop(context);
                           },
                         );
@@ -73,7 +74,7 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomTextfield(
+                  CustomTextField(
                     controller: controller,
                     hintText: 'Add a task here',
                   ),
@@ -84,10 +85,10 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                     child: Consumer<ToDo>(
                       builder: (context, child, toDo) {
                         var toDo = Provider.of<ToDo>(context, listen: false);
-                        return Consumer<GroupToDo>(
+                        return Consumer<HiveDatabase>(
                           builder: (context, child, groupToDo) {
-                            var groupToDo =
-                                Provider.of<GroupToDo>(context, listen: false);
+                            var groupToDo = Provider.of<HiveDatabase>(context,
+                                listen: false);
                             return ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: kBlue,
@@ -96,7 +97,9 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                               child: Container(
                                   child: Text('ADD',
                                       style: TextStyle(fontSize: 20))),
-                              onPressed: () {
+                              onPressed: () async {
+                                Hive.openBox('${controller.text}undone');
+                                Hive.openBox('${controller.text}done');
                                 switch (widget.type) {
                                   case 'homeUndone':
                                     toDo.editUndoneToDo(
@@ -110,21 +113,17 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                                     toDo.addToDo(controller.text);
                                     break;
                                   case 'groupScreenAdd':
-                                    groupToDo.add(
-                                        text: controller.text,
-                                        key: widget.keyValue);
+                                    groupToDo.add(text: controller.text);
                                     break;
                                   case 'groupUndone':
                                     groupToDo.editUndoneToDo(
                                         item: controller.text,
-                                        index: widget.index,
-                                        key: widget.keyValue);
+                                        index: widget.index);
                                     break;
                                   case 'groupDone':
                                     groupToDo.editDoneToDo(
                                         item: controller.text,
-                                        index: widget.index,
-                                        key: widget.keyValue);
+                                        index: widget.index);
                                     break;
                                 }
                                 Navigator.pop(context);

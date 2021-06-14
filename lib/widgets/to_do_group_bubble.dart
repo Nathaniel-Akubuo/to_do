@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:to_do/constants/colors.dart';
-import 'package:to_do/constants/text_styles.dart';
 
 class ToDoGroupBubble extends StatelessWidget {
   final bool calledFromHome;
@@ -27,13 +25,14 @@ class ToDoGroupBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
-
+    final theme = Theme.of(context);
     return calledFromHome
-        ? Container(
-            width: this.width ?? mediaQuery.width * 0.4,
-            decoration: BoxDecoration(
-                color: kTileColor,
-                borderRadius: BorderRadius.all(Radius.circular(15))),
+        ? Card(
+            elevation: 2,
+            color: theme.cardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
             child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
@@ -44,34 +43,41 @@ class ToDoGroupBubble extends StatelessWidget {
             onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.only(right: 10),
-              child: Container(
-                width: this.width ?? mediaQuery.width * 0.4,
-                height: mediaQuery.height * 0.21,
-                decoration: BoxDecoration(
-                    color: kTileColor, borderRadius: BorderRadius.circular(15)),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(
-                          title,
-                          style: kTitleStyle.copyWith(fontSize: 17),
+              child: Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                child: Container(
+                  width: this.width ?? mediaQuery.width * 0.4,
+                  height: mediaQuery.height * 0.21,
+                  decoration: BoxDecoration(
+                      color: theme.cardColor,
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Text(
+                            title,
+                            style: theme.textTheme.headline6
+                                .copyWith(fontSize: 17),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(
-                          date,
-                          style: kDateTextStyle,
+                        Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Text(
+                            date,
+                            style: theme.textTheme.subtitle1,
+                          ),
                         ),
-                      ),
-                      Container(child: child),
-                    ],
+                        Container(child: child),
+                      ],
+                    ),
                   ),
                 ),
               ),

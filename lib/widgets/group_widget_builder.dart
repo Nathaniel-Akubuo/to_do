@@ -36,22 +36,40 @@ class ToDoGroupListView extends StatelessWidget {
                     ),
                     title: currentGroupBox.name,
                     date: currentGroupBox.dateCreated,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: LinearPercentIndicator(
-                            animateFromLastPercent: true,
-                            animation: true,
-                            progressColor: kBlue,
-                            percent: groupToDo.percentDone(
-                                key: currentGroupBox.name),
-                          ),
-                        ),
-                        Text(
-                          '${(groupToDo.percentDone(key: currentGroupBox.name) * 100).toStringAsFixed(0)}%',
-                          style: Theme.of(context).textTheme.caption,
-                        )
-                      ],
+                    child: FutureBuilder(
+                      future: Hive.openBox('${currentGroupBox.name}done'),
+                      builder: (context, snapshot) {
+                        if (snapshot.data != null) {
+                          return FutureBuilder(
+                            future:
+                                Hive.openBox('${currentGroupBox.name}undone'),
+                            builder: (context, snapshot) {
+                              if (snapshot.data != null) {
+                                return Row(
+                                  children: [
+                                    Expanded(
+                                      child: LinearPercentIndicator(
+                                        animateFromLastPercent: true,
+                                        animation: true,
+                                        progressColor: kBlue,
+                                        percent: groupToDo.percentDone(
+                                            key: currentGroupBox.name),
+                                      ),
+                                    ),
+                                    Text(
+                                      '${(groupToDo.percentDone(key: currentGroupBox.name) * 100).toStringAsFixed(0)}%',
+                                      style:
+                                          Theme.of(context).textTheme.caption,
+                                    )
+                                  ],
+                                );
+                              } else
+                                return CircularProgressIndicator();
+                            },
+                          );
+                        } else
+                          return CircularProgressIndicator();
+                      },
                     ),
                     onTap: () {
                       Navigator.push(

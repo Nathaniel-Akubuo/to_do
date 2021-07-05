@@ -98,8 +98,8 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                                   child: Text('ADD',
                                       style: TextStyle(fontSize: 20))),
                               onPressed: () async {
-                                Hive.openBox('${controller.text}undone');
-                                Hive.openBox('${controller.text}done');
+                                await Hive.openBox('${controller.text}undone');
+                                await Hive.openBox('${controller.text}done');
                                 switch (widget.type) {
                                   case 'homeUndone':
                                     toDo.editUndoneToDo(

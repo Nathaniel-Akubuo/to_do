@@ -5,7 +5,7 @@ import 'package:to_do/models/to_do_model.dart';
 class HiveDatabase extends ChangeNotifier {
   String title;
 
-  openBox(key) async {
+  Future<void> openBox(key) async {
     await Hive.openBox('${key}undone');
     await Hive.openBox('${key}done');
     notifyListeners();
@@ -82,15 +82,15 @@ class HiveDatabase extends ChangeNotifier {
 
   void editUndoneToDo({String item, int index}) {
     var undoneBox = Hive.box('${title}undone');
-    var todo = undoneBox.getAt(index) as ToDoModel;
-    todo.item = item;
+    var value = ToDoModel(item: item, checkValue: false);
+    undoneBox.putAt(index, value);
     notifyListeners();
   }
 
   void editDoneToDo({String item, int index}) {
     var doneBox = Hive.box('${title}done');
-    var todo = doneBox.getAt(index) as ToDoModel;
-    todo.item = item;
+    var value = ToDoModel(item: item, checkValue: true);
+    doneBox.putAt(index, value);
     notifyListeners();
   }
 }

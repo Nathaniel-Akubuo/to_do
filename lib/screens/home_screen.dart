@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int date;
 
   void setDayAndDate() {
+
     date = DateTime.now().day;
     var weekday = DateTime.now().weekday;
 
@@ -93,25 +94,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: theme.primaryColor,
-        appBar: AppBar(
-            title: Text(
-              '$day, $date $month',
-              style: theme.textTheme.headline6,
-            ),
-            centerTitle: true,
-            backgroundColor: theme.primaryColor,
-            elevation: 0),
-        floatingActionButton: FloatingActionButtons(),
-        body: Container(
-          height: double.infinity,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: HomeScreenLayout(),
-            ),
+    return Scaffold(
+      backgroundColor: theme.primaryColor,
+      appBar: AppBar(
+          title: Text(
+            '$day, $date $month',
+            style: theme.textTheme.headline6,
+          ),
+          centerTitle: true,
+          backgroundColor: theme.primaryColor,
+          elevation: 0),
+      floatingActionButton: FloatingActionButtons(),
+      body: Container(
+        height: double.infinity,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: HomeScreenLayout(),
           ),
         ),
       ),

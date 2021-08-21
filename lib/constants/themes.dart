@@ -8,6 +8,7 @@ final dark = ThemeData(
   primaryColor: Colors.black,
   accentColor: Color(0xff3068DF),
   cardColor: Color(0xff222228),
+  unselectedWidgetColor: kBlue,
   textTheme: TextTheme(
     subtitle1: TextStyle(
         fontSize: 15, color: Colors.grey, fontWeight: FontWeight.bold),
@@ -26,6 +27,7 @@ final light = ThemeData(
   primaryColor: Color(0xffF5F5F8),
   accentColor: Color(0xff3068DF),
   cardColor: Colors.white,
+  unselectedWidgetColor: kBlue,
   textTheme: TextTheme(
     subtitle1: TextStyle(
         fontSize: 15, color: Colors.grey, fontWeight: FontWeight.bold),
@@ -39,6 +41,7 @@ final light = ThemeData(
         fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
   ),
 );
+
 const kDoneTaskStyle = TextStyle(
     fontSize: 16,
     color: Colors.grey,

@@ -29,12 +29,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^5.0.0
-  circular_check_box: ^1.0.4
   shared_preferences: ^2.0.5
   percent_indicator: ^3.0.1
   path_provider: ^2.0.2
   hive: ^2.0.4
   hive_flutter: ^1.0.0
+  stacked: ^2.1.8
+  stacked_services: ^0.8.12
+  google_sign_in: ^5.0.2
 
 
 dev_dependencies:
@@ -42,6 +44,15 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^1.12.2
   hive_generator: ^1.0.1
+  stacked_generator: ^0.4.6
+  flutter_native_splash: ^1.2.0
+
+flutter_native_splash:
+  image: assets/todo.png
+  color: "#ffffff"
+  color_dark: "#000000"
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

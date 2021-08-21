@@ -19,19 +19,21 @@ class CustomTextField extends StatelessWidget {
         width: mediaQuery.width * 0.8,
         height: mediaQuery.height * 0.08,
         decoration: BoxDecoration(
-            color: theme.cardColor,
-            borderRadius: BorderRadius.all(Radius.circular(15))),
+          color: theme.cardColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
         child: TextField(
           controller: controller,
           autofocus: true,
           style: theme.textTheme.subtitle2,
           maxLines: maxLines,
           decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: hintText,
-            hintStyle: TextStyle(color: Colors.grey),
-            contentPadding: EdgeInsets.all(10)
-          ),
+              border: InputBorder.none,
+              hintText: hintText,
+              hintStyle: TextStyle(color: Colors.grey),
+              contentPadding: EdgeInsets.all(10)),
         ),
       ),
     );

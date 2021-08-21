@@ -23,21 +23,22 @@ class DoneListView extends StatelessWidget {
                 isDone: true,
                 onTap: () {
                   showModalBottomSheet(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      context: context,
-                      builder: (context) => ModalBottomSheet(
-                            defaultText: currentItem.item,
-                            type: 'homeDone',
-                            index: index,
-                          ));
+                    backgroundColor: Theme.of(context).primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    context: context,
+                    builder: (context) => ModalBottomSheet(
+                      defaultText: currentItem.item,
+                      type: 'homeDone',
+                      index: index,
+                    ),
+                  );
                 },
                 keyValue: currentItem.item,
                 onDismissed: (d) => toDo.dismissDone(
                     direction: DismissDirection.startToEnd, index: index),
-                title:currentItem.item,
+                title: currentItem.item,
                 isChecked: currentItem.checkValue,
                 onChecked: (v) => toDo.markAsUndone(value: v, index: index),
               );

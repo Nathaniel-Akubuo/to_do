@@ -29,73 +29,71 @@ class _GroupScreenState extends State<GroupScreen> {
     Provider.of<HiveDatabase>(context, listen: true).title = widget.title;
     var primaryColor = Theme.of(context).primaryColor;
     openBox();
-    return SafeArea(
-      child: Consumer<HiveDatabase>(
-        builder: (context, child, groupToDo) {
-          var groupToDo = Provider.of<HiveDatabase>(context, listen: true);
-          return Scaffold(
+    return Consumer<HiveDatabase>(
+      builder: (context, child, groupToDo) {
+        var groupToDo = Provider.of<HiveDatabase>(context, listen: true);
+        return Scaffold(
+          backgroundColor: primaryColor,
+          appBar: AppBar(
             backgroundColor: primaryColor,
-            appBar: AppBar(
-              backgroundColor: primaryColor,
-              title: Text(widget.title),
-              centerTitle: true,
-              elevation: 0,
+            title: Text(widget.title),
+            centerTitle: true,
+            elevation: 0,
+          ),
+          floatingActionButton: FloatingActionButton(
+              backgroundColor: kBlue,
+              child: Icon(Icons.add),
+              onPressed: () => showModalBottomSheet(
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    context: context,
+                    builder: (context) => ModalBottomSheet(
+                      type: 'groupScreenAdd',
+                      keyValue: widget.title,
+                    ),
+                  )),
+          body: Padding(
+            padding: EdgeInsets.all(15),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    GreyRoundedButton(
+                      title: (groupToDo.undoneListLength == 1)
+                          ? 'You have ${groupToDo.undoneListLength} undone task'
+                          : 'You have ${groupToDo.undoneListLength} undone tasks',
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15),
+                Expanded(
+                  flex: 3,
+                  child: _buildUndoneListView(context),
+                ),
+                SizedBox(height: 15),
+                Row(
+                  children: [
+                    GreyRoundedButton(
+                      title: (groupToDo.doneListLength == 0)
+                          ? 'You have completed ${groupToDo.doneListLength} tasks'
+                          : (groupToDo.doneListLength == 1)
+                              ? 'Hurray! You have completed ${groupToDo.doneListLength} task'
+                              : 'Hurray! You have completed ${groupToDo.doneListLength} tasks',
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15),
+                Expanded(
+                  flex: 2,
+                  child: _buildDoneListView(context),
+                ),
+              ],
             ),
-            floatingActionButton: FloatingActionButton(
-                backgroundColor: kBlue,
-                child: Icon(Icons.add),
-                onPressed: () => showModalBottomSheet(
-                      backgroundColor: primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      context: context,
-                      builder: (context) => ModalBottomSheet(
-                        type: 'groupScreenAdd',
-                        keyValue: widget.title,
-                      ),
-                    )),
-            body: Padding(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      GreyRoundedButton(
-                        title: (groupToDo.undoneListLength == 1)
-                            ? 'You have ${groupToDo.undoneListLength} undone task'
-                            : 'You have ${groupToDo.undoneListLength} undone tasks',
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 15),
-                  Expanded(
-                    flex: 3,
-                    child: _buildUndoneListView(context),
-                  ),
-                  SizedBox(height: 15),
-                  Row(
-                    children: [
-                      GreyRoundedButton(
-                        title: (groupToDo.doneListLength == 0)
-                            ? 'You have completed ${groupToDo.doneListLength} tasks'
-                            : (groupToDo.doneListLength == 1)
-                                ? 'Hurray! You have completed ${groupToDo.doneListLength} task'
-                                : 'Hurray! You have completed ${groupToDo.doneListLength} tasks',
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 15),
-                  Expanded(
-                    flex: 2,
-                    child: _buildDoneListView(context),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -143,13 +141,11 @@ class _GroupScreenState extends State<GroupScreen> {
             title: toDo.item,
             isChecked: toDo.checkValue,
             keyValue: toDo.item,
-            onChecked: (v) {
-              groupToDo.markAsUndone(value: v, index: index);
-            },
-            onDismissed: (d) {
+            onChecked: (v) =>
+              groupToDo.markAsUndone(value: v, index: index),
+            onDismissed: (_) =>
               groupToDo.dismissDone(
-                  index: index, direction: DismissDirection.startToEnd);
-            },
+                  index: index, direction: DismissDirection.startToEnd),
             onTap: () => showModalBottomSheet(
                 backgroundColor: Theme.of(context).primaryColor,
                 shape: RoundedRectangleBorder(

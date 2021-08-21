@@ -1,4 +1,3 @@
-import 'package:circular_check_box/circular_check_box.dart';
 import 'package:to_do/constants/themes.dart';
 import 'package:flutter/material.dart';
 
@@ -43,9 +42,9 @@ class ToDoBubble extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(15))),
               child: Row(
                 children: [
-                  CircularCheckBox(
+                  Checkbox(
                       activeColor: Colors.grey,
-                      inactiveColor: kBlue,
+                      shape: CircleBorder(side: BorderSide(color: kBlue)),
                       value: isChecked,
                       onChanged: onChecked),
                   Expanded(

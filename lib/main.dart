@@ -25,17 +25,17 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ToDo(),
-      child: ChangeNotifierProvider(
-        create: (context) => HiveDatabase(),
-        child: MaterialApp(
-          themeMode: ThemeMode.system,
-          darkTheme: dark,
-          theme: light,
-          debugShowCheckedModeBanner: false,
-          home: HomeScreen(),
-        ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ToDo()),
+        ChangeNotifierProvider(create: (context) => HiveDatabase())
+      ],
+      child: MaterialApp(
+        themeMode: ThemeMode.system,
+        darkTheme: dark,
+        theme: light,
+        debugShowCheckedModeBanner: false,
+        home: HomeScreen(),
       ),
     );
   }
